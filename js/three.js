@@ -63,7 +63,7 @@
 		};
 	}
 
-	var REVISION = '122dev';
+	var REVISION = '121dev';
 	var MOUSE = {
 		LEFT: 0,
 		MIDDLE: 1,
@@ -11534,7 +11534,6 @@
 							renderer.setRenderTarget(currentRenderTarget);
 							renderer.setRenderList(currentRenderList);
 							renderer.setRenderState(currentRenderState);
-							texture.addEventListener('dispose', onTextureDispose);
 							return mapTextureMapping(renderTarget.texture, texture.mapping);
 						} else {
 							// image not yet ready. try the conversion next frame
@@ -11545,17 +11544,6 @@
 			}
 
 			return texture;
-		}
-
-		function onTextureDispose(event) {
-			var texture = event.target;
-			texture.removeEventListener('dispose', onTextureDispose);
-			var cubemap = cubemaps.get(texture);
-
-			if (cubemap !== undefined) {
-				cubemaps.delete(texture);
-				cubemap.dispose();
-			}
 		}
 
 		function dispose() {
@@ -17735,8 +17723,8 @@
 		this.compile = function (scene, camera) {
 			currentRenderState = renderStates.get(scene, camera);
 			currentRenderState.init();
-			scene.traverseVisible(function (object) {
-				if (object.isLight && object.layers.test(camera.layers)) {
+			scene.traverse(function (object) {
+				if (object.isLight) {
 					currentRenderState.pushLight(object);
 
 					if (object.castShadow) {
@@ -25284,7 +25272,7 @@
 			if (referenceFrame === undefined) referenceFrame = 0;
 			if (referenceClip === undefined) referenceClip = targetClip;
 			if (fps === undefined || fps <= 0) fps = 30;
-			var numTracks = referenceClip.tracks.length;
+			var numTracks = targetClip.tracks.length;
 			var referenceTime = referenceFrame / fps; // Make each track's values relative to the values at the reference frame
 
 			var _loop = function _loop(i) {
