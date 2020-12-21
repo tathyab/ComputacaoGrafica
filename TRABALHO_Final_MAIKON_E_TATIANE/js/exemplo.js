@@ -415,7 +415,7 @@ var loadObj = function(){
 
             object.position.z = 1;
             object.position.x = 98;
-            object.position.y = -1;
+            object.position.y = -2;
 
             object.rotation.y -= 1;
 

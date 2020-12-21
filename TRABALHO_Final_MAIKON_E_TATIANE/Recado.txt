@@ -1,0 +1,7 @@
+
+Foi adicionado os animais (Jacare, vaca, cavalo, gato), e uma criança e um moinho e uma casa.
+
+Obs: Moinho nao esta funcionando.
+
+Conforme explicado na apresentação, para o professor, o aluno maikon não conseguiu comitar as partes que ele desenvolveu por problemas tecnicos. 
+
