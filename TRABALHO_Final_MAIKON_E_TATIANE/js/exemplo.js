@@ -62,8 +62,8 @@ var guiFunction = function(){
         creep: function () {
             setAction(animationActions[5])
         },
-        idle: function () {
-            setAction(animationActions[4])
+        gira: function () {
+            setAction(animationActions[0])
         },
         seiNao: function () {
             setAction(animationActions[2])
@@ -116,7 +116,7 @@ var guiFunction = function(){
         objCardirectionalLightregado.position.z = parametroQualquer;
     });
     
-    var chGeometry = gui.add(param, 'animais', ['Vaca', 'Jacare', 'Cavalo', 'Gato', 'Moinho', 'Carrossel', 'Casas','Criancas', 'Galinha' ]).name("Elementos");
+    var chGeometry = gui.add(param, 'animais', ['Vaca', 'Jacare', 'Cavalo', 'Gato', 'Moinho', 'Casas','Criancas', 'Galinha' ]).name("Elementos");
     chGeometry.onChange(function(parametroQualquer){
         
         if (parametroQualquer == 'Vaca'){
@@ -129,8 +129,6 @@ var guiFunction = function(){
         camera.lookAt(objCarregadoGato.position);
         }else if (parametroQualquer == 'Moinho'){
         camera.lookAt(objCarregadoMoinho.position);
-        }else if (parametroQualquer == 'Carrossel'){
-        camera.lookAt(objCarregadoCarrossel.position);
         }else if (parametroQualquer == 'Casas'){
         camera.lookAt(objCarregadoCasas.position);
         }else if (parametroQualquer == 'Criancas'){
@@ -149,10 +147,6 @@ var guiFunction = function(){
 
     animationsFolder = gui.addFolder("Animations");
     
-    
-   
-
-
     gui.open();
    
 };
@@ -401,28 +395,33 @@ var loadObj = function(){
  fbxLoader.load(// Moinho fbx
         'assets/models/Farm_ANIM.fbx', //arquivo que vamos carregar
         function(object){
-            objCarregadoMoinho = object;
+            
+            // animationAction = mixer.clipAction((object).animations[0]);
+            // animationActions.push(animationAction)         
+            // animationsFolder.add(animations, "gira")
+            // activeAction = animationAction;
+            // console.log(activeAction)   
 
             object.traverse( function ( child ) {
                 if ( child instanceof THREE.Mesh ) {
                     console.log(child);
-                    child.material.map = textureLoader.load("assets/textura/untitled.jpg");
+                    child.material.map = textureLoader.load("assets/textura/Diffuse_palette_noise.jpg");
                     child.material.shininess = 0;
                 }
             });
 
-            objCarregadoMoinho.scale.x = 0.17;
-            objCarregadoMoinho.scale.y = 0.17;
-            objCarregadoMoinho.scale.z = 0.17;
+            object.scale.set(0.17, 0.17, 0.17);
+        
 
-            objCarregadoMoinho.position.z = 1;
-            objCarregadoMoinho.position.x = 98;
-            objCarregadoMoinho.position.y = -1;
+            object.position.z = 1;
+            object.position.x = 98;
+            object.position.y = -1;
 
-            objCarregadoMoinho.rotation.y += 1;
+            object.rotation.y -= 1;
 
-            objCarregadoMoinho.castShadow = true;
+            object.castShadow = true;
 
+            objCarregadoMoinho = object;
             scene.add(objCarregadoMoinho);    
         },//metodo, tudo deu certo
         function( andamento) {
@@ -465,7 +464,7 @@ var loadObj = function(){
         } //metodo deu merda
     );
 
- fbxLoader.load(// Carrossel fbx
+ /* fbxLoader.load(// Carrossel fbx
         'assets/models/Carousel.fbx', //arquivo que vamos carregar
         function(object){
             objCarregadoCarrossel = object;
@@ -498,7 +497,7 @@ var loadObj = function(){
         function (error){
             console.log("Deu caca: " + error);
         } //metodo deu merda
-    );
+    ); */
 
  fbxLoader.load(// Casas fbx
         'assets/models/House1.fbx', //arquivo que vamos carregar
